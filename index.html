@@ -3,116 +3,254 @@
 <head>
     <meta charSet="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Digital Store</title>
-    <meta name="description" content="Buying digital goods has never been easier than with our Digital Store. Need to purchase digital products? Visit our store now!"/>
+    <title>Scripters — Buy digital goods!</title>
+    <meta name="description" content="Premium digital goods and scripts from Scripters. Join our community and enhance your development workflow!"/>
     <meta name="robots" content="index, follow"/>
-    <meta property="og:title" content="Digital Goods Store"/>
-    <meta property="og:description" content="Buy the digital goods you need without breaking the bank or breaking a sweat!"/>
+    <meta property="og:title" content="Scripters — Buy digital goods!"/>
+    <meta property="og:description" content="Premium digital goods and scripts from Scripters. Join our community and enhance your development workflow!"/>
     <meta property="og:type" content="website"/>
     <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Digital Goods Store"/>
+    <meta name="twitter:title" content="Scripters — Buy digital goods!"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
     <style>
+        :root {
+            --primary: #2B5AED;
+            --primary-hover: #1E3FA3;
+            --background: #0D1321;
+            --card-bg: #1a1a2e;
+            --text: #ffffff;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            color: white;
-            background-color: #0D1321;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            background-color: var(--background);
             margin: 0;
             padding: 0;
+            line-height: 1.5;
         }
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
+
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #2B5AED, #5B8AF5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .social-link {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
         }
+
         .product-card {
-            background: #1a1a2e;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            transition: transform 0.3s ease;
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
         }
+
         .product-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+
+        .product-banner {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .product-content {
+            padding: 20px;
+        }
+
         .product-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-radius: 8px;
+            margin-top: -50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
+
+        .product-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 15px 0 10px;
+        }
+
+        .product-description {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
         .buy-button {
-            background: #29d;
-            color: #fff;
+            background: var(--primary);
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
+            font-weight: 600;
+            width: 100%;
             transition: background 0.3s ease;
         }
-        .buy-button:hover {
-            background: #007acc;
+
+        .buy-button:hover:not(:disabled) {
+            background: var(--primary-hover);
         }
+
         .buy-button:disabled {
-            background: #ccc;
+            background: rgba(255, 255, 255, 0.1);
             cursor: not-allowed;
         }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px 0;
-            background: #1a1a2e;
-        }
+
         .modal {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
         }
+
         .modal-content {
-            background: #1a1a2e;
-            padding: 20px;
-            border-radius: 8px;
-            max-width: 400px;
-            width: 100%;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
         }
+
         .close-button {
-            float: right;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             background: none;
             border: none;
-            color: white;
+            color: var(--text);
             font-size: 1.5rem;
             cursor: pointer;
-        }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
             padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .modal-message {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+            margin-bottom: 15px;
+        }
+
+        .submit-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            background: var(--primary-hover);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .social-links {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .social-link {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -122,23 +260,34 @@
     <script type="text/babel">
         const { useState, useEffect, useCallback } = React;
 
-        const products = [
-            { id: 1, name: "Premium eBook", price: 250.00, image: "https://via.placeholder.com/250?text=Premium+eBook" },
-            { id: 2, name: "Online Course", price: 100.00, image: "https://via.placeholder.com/250?text=Online+Course" },
-            { id: 3, name: "Software License", price: 300.00, image: "https://via.placeholder.com/250?text=Software+License" },
-            { id: 4, name: "Digital Art", price: 400.00, image: "https://via.placeholder.com/250?text=Digital+Art" },
-            { id: 5, name: "Music Album", price: 150.00, image: "https://via.placeholder.com/250?text=Music+Album" }
-        ];
-
-        const tonToUSD = 2.00;
+        // Fetch products from XML
+        async function fetchProducts() {
+            const response = await fetch('products.xml');
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, 'text/xml');
+            const productElements = xml.getElementsByTagName('product');
+            
+            return Array.from(productElements).map(product => ({
+                id: product.getElementsByTagName('id')[0].textContent,
+                name: product.getElementsByTagName('name')[0].textContent,
+                price: parseFloat(product.getElementsByTagName('price')[0].textContent),
+                description: product.getElementsByTagName('description')[0].textContent,
+                image: product.getElementsByTagName('image')[0].textContent,
+                banner: product.getElementsByTagName('banner')[0].textContent,
+            }));
+        }
 
         function App() {
+            const [products, setProducts] = useState([]);
             const [isConnected, setIsConnected] = useState(false);
             const [showModal, setShowModal] = useState(false);
             const [modalContent, setModalContent] = useState({ title: '', message: '' });
             const [tonConnect, setTonConnect] = useState(null);
 
             useEffect(() => {
+                fetchProducts().then(setProducts);
+
                 const tc = new TON_CONNECT_UI.TonConnectUI({
                     manifestUrl: 'https://raw.githubusercontent.com/Rekt-Developer/swap.scripters.shop/refs/heads/main/tonconnect-manifest.json',
                     buttonRootId: 'ton-connect-button'
@@ -160,6 +309,7 @@
                     return;
                 }
 
+                const tonToUSD = 2.00;
                 const amountInTON = (product.price / tonToUSD).toFixed(6);
                 const transaction = {
                     validUntil: Math.floor(Date.now() / 1000) + 60,
@@ -191,53 +341,69 @@
             return (
                 <div className="container">
                     <header className="header">
-                        <h1>Digital Store</h1>
-                        <div id="ton-connect-button"></div>
+                        <h1 className="logo">Scripters Store</h1>
+                        <div className="social-links">
+                            <a href="https://t.me/ScriptersCommunity" target="_blank" rel="noopener noreferrer" className="social-link">
+                                <i className="fab fa-telegram"></i>
+                                Join our Telegram
+                            </a>
+                            <div id="ton-connect-button"></div>
+                        </div>
                     </header>
+                    
                     <main>
-                        <h2>Available Products</h2>
                         <div className="products-grid">
                             {products.map((product) => (
                                 <div key={product.id} className="product-card">
-                                    <img src={product.image} alt={product.name} className="product-image" />
-                                    <h3>{product.name}</h3>
-                                    <p>${product.price.toFixed(2)}</p>
-                                    <button 
-                                        onClick={() => handleBuy(product)} 
-                                        className="buy-button"
-                                        disabled={!isConnected}
-                                        aria-label={`Buy ${product.name}`}
-                                    >
-                                        Buy Now
-                                    </button>
+                                    <img src={product.banner} alt="" className="product-banner" />
+                                    <div className="product-content">
+                                        <img src={product.image} alt={product.name} className="product-image" />
+                                        <h3 className="product-title">{product.name}</h3>
+                                        <p className="product-description">{product.description}</p>
+                                        <div className="product-price">${product.price.toFixed(2)}</div>
+                                        <button 
+                                            onClick={() => handleBuy(product)} 
+                                            className="buy-button"
+                                            disabled={!isConnected}
+                                            aria-label={`Buy ${product.name}`}
+                                        >
+                                            {isConnected ? 'Buy Now' : 'Connect Wallet to Buy'}
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </main>
+
                     <footer>
-                        <p>&copy; 2023 Digital Store. All rights reserved.</p>
+                        <p>© 2024 Scripters Store. All rights reserved.</p>
                     </footer>
+
                     {showModal && (
                         <div className="modal" role="dialog" aria-modal="true">
                             <div className="modal-content">
                                 <button className="close-button" onClick={() => setShowModal(false)} aria-label="Close modal">
-                                    &times;
+                                    ×
                                 </button>
-                                <h2>{modalContent.title}</h2>
-                                <p>{modalContent.message}</p>
+                                <h2 className="modal-title">{modalContent.title}</h2>
+                                <p className="modal-message">{modalContent.message}</p>
                                 {modalContent.title === 'Transaction Initiated' && (
                                     <form onSubmit={(e) => {
                                         e.preventDefault();
                                         const email = e.target.email.value;
-                                        // Here you would typically send this email to your server
                                         console.log("Email submitted:", email);
                                         setShowModal(false);
                                     }}>
-                                        <label htmlFor="email">
-                                            <span className="sr-only">Enter your email:</span>
-                                            <input type="email" id="email" name="email" required placeholder="Enter your email" />
-                                        </label>
-                                        <button type="submit">Submit</button>
+                                        <input 
+                                            type="email" 
+                                            id="email" 
+                                            name="email" 
+                                            required 
+                                            placeholder="Enter your email to receive products" 
+                                        />
+                                        <button type="submit" className="submit-button">
+                                            Submit
+                                        </button>
                                     </form>
                                 )}
                             </div>
