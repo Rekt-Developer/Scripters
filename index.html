@@ -162,6 +162,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: background 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
         }
 
         .cta-button:hover {
@@ -231,6 +233,9 @@
             font-weight: 600;
             width: 100%;
             transition: background 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .buy-button:hover:not(:disabled) {
@@ -507,7 +512,7 @@
 
         function HomePage({ products, handleBuy, isConnected, tonPrice }) {
             return (
-                <>
+                <React.Fragment>
                     <div className="hero">
                         <h1>Elevate Your Crypto Development</h1>
                         <p>Discover premium digital products designed to enhance your crypto operations and boost productivity.</p>
@@ -524,7 +529,7 @@
                             />
                         ))}
                     </div>
-                </>
+                </React.Fragment>
             );
         }
 
