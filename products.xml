@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products>
+    <product>
+        <id>1</id>
+        <name>Premium Script Bundle</name>
+        <price>250.00</price>
+        <description>A comprehensive collection of premium automation scripts and tools for developers.</description>
+        <image>https://via.placeholder.com/800x400?text=Premium+Scripts</image>
+        <banner>https://via.placeholder.com/1200x300?text=Premium+Scripts+Banner</banner>
+    </product>
+    <product>
+        <id>2</id>
+        <name>Developer Toolkit Pro</name>
+        <price>100.00</price>
+        <description>Essential development tools and utilities for professional developers.</description>
+        <image>https://via.placeholder.com/800x400?text=Developer+Toolkit</image>
+        <banner>https://via.placeholder.com/1200x300?text=Developer+Toolkit+Banner</banner>
+    </product>
+    <product>
+        <id>3</id>
+        <name>Automation Suite</name>
+        <price>300.00</price>
+        <description>Advanced automation solutions for streamlining your workflow.</description>
+        <image>https://via.placeholder.com/800x400?text=Automation+Suite</image>
+        <banner>https://via.placeholder.com/1200x300?text=Automation+Banner</banner>
+    </product>
+    <product>
+        <id>4</id>
+        <name>Security Tools Package</name>
+        <price>400.00</price>
+        <description>Comprehensive security and penetration testing tools.</description>
+        <image>https://via.placeholder.com/800x400?text=Security+Tools</image>
+        <banner>https://via.placeholder.com/1200x300?text=Security+Tools+Banner</banner>
+    </product>
+    <product>
+        <id>5</id>
+        <name>Analytics Dashboard</name>
+        <price>150.00</price>
+        <description>Professional analytics and monitoring dashboard templates.</description>
+        <image>https://via.placeholder.com/800x400?text=Analytics+Dashboard</image>
+        <banner>https://via.placeholder.com/1200x300?text=Analytics+Banner</banner>
+    </product>
+</products>
