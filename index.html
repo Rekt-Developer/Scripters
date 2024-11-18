@@ -31,6 +31,7 @@
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+    <script src="https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js"></script>
     <style>
         :root {
             --primary: #2B5AED;
@@ -38,6 +39,12 @@
             --background: #0D1321;
             --card-bg: #1a1a2e;
             --text: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
         }
 
         body {
@@ -60,15 +67,44 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid var(--border);
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .logo span {
             font-size: 1.5rem;
             font-weight: 700;
             background: linear-gradient(45deg, #2B5AED, #5B8AF5);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
         }
 
         .social-links {
@@ -91,6 +127,39 @@
 
         .social-link:hover {
             background: rgba(255, 255, 255, 0.2);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-hover);
         }
 
         .products-grid {
@@ -139,7 +208,7 @@
         }
 
         .product-description {
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 20px;
             line-height: 1.6;
@@ -221,7 +290,7 @@
         input[type="email"] {
             width: 100%;
             padding: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
             border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
             color: var(--text);
@@ -243,17 +312,51 @@
             background: var(--primary-hover);
         }
 
+        .ton-price {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 10px;
+        }
+
+        .product-page {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .product-image-large {
+            width: 50%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .product-image-large img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .product-details {
+            width: 50%;
+        }
+
+        .product-features {
+            margin-top: 20px;
+        }
+
+        .product-features h3 {
+            margin-bottom: 10px;
+        }
+
+        .product-features ul {
+            padding-left: 20px;
+        }
+
         footer {
             text-align: center;
             margin-top: 60px;
             padding: 20px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .ton-price {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: 10px;
+            border-top: 1px solid var(--border);
         }
 
         @media (max-width: 768px) {
@@ -263,7 +366,7 @@
                 text-align: center;
             }
 
-            .social-links {
+            .nav-links, .social-links {
                 flex-direction: column;
                 width: 100%;
             }
@@ -271,6 +374,14 @@
             .social-link {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .product-page {
+                flex-direction: column;
+            }
+
+            .product-image-large, .product-details {
+                width: 100%;
             }
         }
     </style>
@@ -280,6 +391,7 @@
 
     <script type="text/babel">
         const { useState, useEffect, useCallback } = React;
+        const { BrowserRouter, Route, Switch, Link, useParams, useHistory } = ReactRouterDOM;
 
         async function fetchProducts() {
             const response = await fetch('products.xml');
@@ -296,6 +408,7 @@
                 image: product.getElementsByTagName('image')[0].textContent,
                 banner: product.getElementsByTagName('banner')[0].textContent,
                 download: product.getElementsByTagName('download')[0].textContent,
+                features: Array.from(product.getElementsByTagName('feature')).map(feature => feature.textContent),
             }));
         }
 
@@ -307,6 +420,136 @@
             });
             const data = await response.json();
             return data['the-open-network'].usd;
+        }
+
+        function Header({ isConnected }) {
+            return (
+                <header className="header">
+                    <Link to="/" className="logo">
+                        <img src="assets/logo.png" alt="Scripters Logo" />
+                        <span>Scripters Store</span>
+                    </Link>
+                    <nav className="nav-links">
+                        <Link to="/" className="nav-link">Home</Link>
+                        <Link to="/products" className="nav-link">Products</Link>
+                        <Link to="/about" className="nav-link">About</Link>
+                    </nav>
+                    <div className="social-links">
+                        <a href="https://t.me/ScriptersCommunity" target="_blank" rel="noopener noreferrer" className="social-link">
+                            <i className="fab fa-telegram"></i>
+                            Join our Telegram
+                        </a>
+                        <div id="ton-connect-button"></div>
+                    </div>
+                </header>
+            );
+        }
+
+        function ProductCard({ product, handleBuy, isConnected, tonPrice }) {
+            return (
+                <div className="product-card">
+                    <img src={product.banner} alt="" className="product-banner" />
+                    <div className="product-content">
+                        <img src={product.image} alt={product.name} className="product-image" />
+                        <h3 className="product-title">{product.name}</h3>
+                        <p className="product-description">{product.description}</p>
+                        <div className="product-price">${product.price.toFixed(2)}</div>
+                        <Link to={`/product/${product.id}`} className="buy-button">View Details</Link>
+                        {tonPrice && (
+                            <p className="ton-price">≈ {(product.price / tonPrice).toFixed(2)} TON</p>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function ProductPage({ products, handleBuy, isConnected, tonPrice }) {
+            const { id } = useParams();
+            const product = products.find(p => p.id === id);
+            const history = useHistory();
+
+            if (!product) {
+                return <div>Product not found</div>;
+            }
+
+            return (
+                <div className="product-page">
+                    <div className="product-image-large">
+                        <img src={product.image} alt={product.name} />
+                    </div>
+                    <div className="product-details">
+                        <h2>{product.name}</h2>
+                        <p>{product.description}</p>
+                        <div className="product-price">${product.price.toFixed(2)}</div>
+                        {tonPrice && (
+                            <p className="ton-price">≈ {(product.price / tonPrice).toFixed(2)} TON</p>
+                        )}
+                        <button 
+                            onClick={() => handleBuy(product, history)} 
+                            className="buy-button"
+                            disabled={!isConnected}
+                        >
+                            {isConnected ? 'Buy Now' : 'Connect Wallet to Buy'}
+                        </button>
+                        <div className="product-features">
+                            <h3>Features:</h3>
+                            <ul>
+                                {product.features.map((feature, index) => (
+                                    <li key={index}>{feature}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function HomePage({ products, handleBuy, isConnected, tonPrice }) {
+            return (
+                <>
+                    <div className="hero">
+                        <h1>Elevate Your Development Workflow</h1>
+                        <p>Discover premium digital products designed to enhance your coding experience and boost productivity.</p>
+                        <Link to="/products" className="cta-button">Explore Products</Link>
+                    </div>
+                    <div className="products-grid">
+                        {products.slice(0, 3).map((product) => (
+                            <ProductCard 
+                                key={product.id} 
+                                product={product} 
+                                handleBuy={handleBuy} 
+                                isConnected={isConnected}
+                                tonPrice={tonPrice}
+                            />
+                        ))}
+                    </div>
+                </>
+            );
+        }
+
+        function ProductsPage({ products, handleBuy, isConnected, tonPrice }) {
+            return (
+                <div className="products-grid">
+                    {products.map((product) => (
+                        <ProductCard 
+                            key={product.id} 
+                            product={product} 
+                            handleBuy={handleBuy} 
+                            isConnected={isConnected}
+                            tonPrice={tonPrice}
+                        />
+                    ))}
+                </div>
+            );
+        }
+
+        function AboutPage() {
+            return (
+                <div>
+                    <h2>About Scripters</h2>
+                    <p>Scripters is a leading provider of premium digital products for developers. Our mission is to empower developers with cutting-edge tools and resources to enhance their workflow and productivity.</p>
+                </div>
+            );
         }
 
         function App() {
@@ -331,7 +574,6 @@
                     setIsConnected(!!wallet);
                 });
 
-                // Fetch TON price every 5 minutes
                 const intervalId = setInterval(() => {
                     fetchTONPrice().then(setTonPrice);
                 }, 300000);
@@ -339,7 +581,7 @@
                 return () => clearInterval(intervalId);
             }, []);
 
-            const handleBuy = useCallback(async (product) => {
+            const handleBuy = useCallback(async (product, history) => {
                 if (!isConnected) {
                     setModalContent({
                         title: 'Connection Required',
@@ -368,6 +610,7 @@
                         downloadLink: product.download
                     });
                     setShowModal(true);
+                    history.push('/');
                 } catch (e) {
                     console.error("Transaction failed:", e);
                     setModalContent({
@@ -379,82 +622,78 @@
             }, [isConnected, tonConnect, tonPrice]);
 
             return (
-                <div className="container">
-                    <header className="header">
-                        <h1 className="logo">Scripters Store</h1>
-                        <div className="social-links">
-                            <a href="https://t.me/ScriptersCommunity" target="_blank" rel="noopener noreferrer" className="social-link">
-                                <i className="fab fa-telegram"></i>
-                                Join our Telegram
-                            </a>
-                            <div id="ton-connect-button"></div>
-                        </div>
-                    </header>
-                    
-                    <main>
-                        <div className="products-grid">
-                            {products.map((product) => (
-                                <div key={product.id} className="product-card">
-                                    <img src={product.banner} alt="" className="product-banner" />
-                                    <div className="product-content">
-                                        <img src={product.image} alt={product.name} className="product-image" />
-                                        <h3 className="product-title">{product.name}</h3>
-                                        <p className="product-description">{product.description}</p>
-                                        <div className="product-price">${product.price.toFixed(2)}</div>
-                                        <button 
-                                            onClick={() => handleBuy(product)} 
-                                            className="buy-button"
-                                            disabled={!isConnected}
-                                            aria-label={`Buy ${product.name}`}
-                                        >
-                                            {isConnected ? 'Buy Now' : 'Connect Wallet to Buy'}
-                                        </button>
-                                        {tonPrice && (
-                                            <p className="ton-price">≈ {(product.price / tonPrice).toFixed(2)} TON</p>
-                                        )}
-                                    </div>
+                <BrowserRouter>
+                    <div className="container">
+                        <Header isConnected={isConnected} />
+                        
+                        <Switch>
+                            <Route exact path="/">
+                                <HomePage 
+                                    products={products} 
+                                    handleBuy={handleBuy} 
+                                    isConnected={isConnected}
+                                    tonPrice={tonPrice}
+                                />
+                            </Route>
+                            <Route exact path="/products">
+                                <ProductsPage 
+                                    products={products} 
+                                    handleBuy={handleBuy} 
+                                    isConnected={isConnected}
+                                    tonPrice={tonPrice}
+                                />
+                            </Route>
+                            <Route path="/product/:id">
+                                <ProductPage 
+                                    products={products} 
+                                    handleBuy={handleBuy} 
+                                    isConnected={isConnected}
+                                    tonPrice={tonPrice}
+                                />
+                            </Route>
+                            <Route path="/about">
+                                <AboutPage />
+                            </Route>
+                        </Switch>
+
+                        <footer>
+                            <p>© 2024 Scripters Store. All rights reserved.</p>
+                            {tonPrice && <p>Current TON Price: ${tonPrice.toFixed(2)}</p>}
+                        </footer>
+
+                        {showModal && (
+                            <div className="modal" role="dialog" aria-modal="true">
+                                <div className="modal-content">
+                                    <button className="close-button" onClick={() => setShowModal(false)} aria-label="Close modal">
+                                        ×
+                                    </button>
+                                    <h2 className="modal-title">{modalContent.title}</h2>
+                                    <p className="modal-message">{modalContent.message}</p>
+                                    {modalContent.title === 'Transaction Initiated' && (
+                                        <form onSubmit={(e) => {
+                                            e.preventDefault();
+                                            const email = e.target.email.value;
+                                            console.log("Email submitted:", email);
+                                            window.location.href = modalContent.downloadLink;
+                                            setShowModal(false);
+                                        }}>
+                                            <input 
+                                                type="email" 
+                                                id="email" 
+                                                name="email" 
+                                                required 
+                                                placeholder="Enter your email to receive products" 
+                                            />
+                                            <button type="submit" className="submit-button">
+                                                Download Product
+                                            </button>
+                                        </form>
+                                    )}
                                 </div>
-                            ))}
-                        </div>
-                    </main>
-
-                    <footer>
-                        <p>© 2024 Scripters Store. All rights reserved.</p>
-                        {tonPrice && <p>Current TON Price: ${tonPrice.toFixed(2)}</p>}
-                    </footer>
-
-                    {showModal && (
-                        <div className="modal" role="dialog" aria-modal="true">
-                            <div className="modal-content">
-                                <button className="close-button" onClick={() => setShowModal(false)} aria-label="Close modal">
-                                    ×
-                                </button>
-                                <h2 className="modal-title">{modalContent.title}</h2>
-                                <p className="modal-message">{modalContent.message}</p>
-                                {modalContent.title === 'Transaction Initiated' && (
-                                    <form onSubmit={(e) => {
-                                        e.preventDefault();
-                                        const email = e.target.email.value;
-                                        console.log("Email submitted:", email);
-                                        window.location.href = modalContent.downloadLink;
-                                        setShowModal(false);
-                                    }}>
-                                        <input 
-                                            type="email" 
-                                            id="email" 
-                                            name="email" 
-                                            required 
-                                            placeholder="Enter your email to receive products" 
-                                        />
-                                        <button type="submit" className="submit-button">
-                                            Download Product
-                                        </button>
-                                    </form>
-                                )}
                             </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+                    </div>
+                </BrowserRouter>
             );
         }
 
