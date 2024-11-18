@@ -27,4 +27,31 @@
         <banner>https://storage.sell.app/store/49175/listings/kcdSyWdCFmRyYU86U7CqDyUO9oCk9JYWYzVvyXID.png</banner>
         <download>https://example.com/downloads/flash-usdt-full-package.zip</download>
     </product>
+    <product>
+        <id>4</id>
+        <name>Metamusk Crypto Drainer</name>
+        <price>200.00</price>
+        <description>An advanced tool for managing and draining crypto wallets effectively.</description>
+        <image>https://www.cryptounitoffice.com/images/metamask.png</image>
+        <banner>https://www.cryptounitoffice.com/images/metamask.png</banner>
+        <download>https://example.com/downloads/metamusk-crypto-drainer.zip</download>
+    </product>
+    <product>
+        <id>5</id>
+        <name>Angel Drainer</name>
+        <price>150.00</price>
+        <description>A professional tool for secure and efficient crypto wallet draining.</description>
+        <image>https://defi-planet.com/wp-content/uploads/2024/07/Crypto-Malware-Angel-Drainer-Reportedly-Shuts-Down-Following-Identification-of-Developers.jpeg</image>
+        <banner>https://defi-planet.com/wp-content/uploads/2024/07/Crypto-Malware-Angel-Drainer-Reportedly-Shuts-Down-Following-Identification-of-Developers.jpeg</banner>
+        <download>https://example.com/downloads/angel-drainer.zip</download>
+    </product>
+    <product>
+        <id>6</id>
+        <name>SeedSigner</name>
+        <price>50.00</price>
+        <description>An affordable and effective tool for managing cryptocurrency seed phrases.</description>
+        <image>https://bitcoiner.guide/assets/img/SeedSigner.png</image>
+        <banner>https://bitcoiner.guide/assets/img/SeedSigner.png</banner>
+        <download>https://example.com/downloads/seedsigner.zip</download>
+    </product>
 </products>
