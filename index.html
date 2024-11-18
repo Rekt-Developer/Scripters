@@ -4,8 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Scripters — Premium Digital Products for Developers</title>
-    <meta name="description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
-    <meta name="keywords" content="digital products, developer tools, scripts, automation, security tools"/>
+    <meta name="description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
+    <meta name="keywords" content="digital products, developer tools, Bitcoin, crypto, wallet management"/>
     <meta name="author" content="Scripters Team"/>
     <meta name="robots" content="index, follow"/>
     
@@ -13,14 +13,14 @@
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://scripters.store/"/>
     <meta property="og:title" content="Scripters — Premium Digital Products for Developers"/>
-    <meta property="og:description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
+    <meta property="og:description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
     <meta property="og:image" content="https://scripters.store/og-image.jpg"/>
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:url" content="https://scripters.store/"/>
     <meta property="twitter:title" content="Scripters — Premium Digital Products for Developers"/>
-    <meta property="twitter:description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
+    <meta property="twitter:description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
     <meta property="twitter:image" content="https://scripters.store/twitter-image.jpg"/>
 
     <!-- Favicon -->
@@ -132,11 +132,17 @@
         .hero {
             text-align: center;
             padding: 60px 0;
+            background: linear-gradient(135deg, #1a1a2e, #0D1321);
+            border-radius: 16px;
+            margin-top: 40px;
         }
 
         .hero h1 {
             font-size: 3rem;
             margin-bottom: 20px;
+            background: linear-gradient(45deg, #2B5AED, #5B8AF5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
@@ -155,11 +161,12 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .cta-button:hover {
             background: var(--primary-hover);
+            transform: translateY(-2px);
         }
 
         .products-grid {
@@ -182,12 +189,6 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
 
-        .product-banner {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-        }
-
         .product-content {
             padding: 20px;
         }
@@ -197,7 +198,6 @@
             height: 200px;
             object-fit: cover;
             border-radius: 8px;
-            margin-top: -50px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -230,11 +230,12 @@
             cursor: pointer;
             font-weight: 600;
             width: 100%;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .buy-button:hover:not(:disabled) {
             background: var(--primary-hover);
+            transform: translateY(-2px);
         }
 
         .buy-button:disabled {
@@ -306,10 +307,12 @@
             cursor: pointer;
             font-weight: 600;
             width: 100%;
+            transition: background 0.3s ease, transform 0.2s ease;
         }
 
         .submit-button:hover {
             background: var(--primary-hover);
+            transform: translateY(-2px);
         }
 
         .ton-price {
@@ -406,7 +409,6 @@
                 price: parseFloat(product.getElementsByTagName('price')[0].textContent),
                 description: product.getElementsByTagName('description')[0].textContent,
                 image: product.getElementsByTagName('image')[0].textContent,
-                banner: product.getElementsByTagName('banner')[0].textContent,
                 download: product.getElementsByTagName('download')[0].textContent,
                 features: Array.from(product.getElementsByTagName('feature')).map(feature => feature.textContent),
             }));
@@ -448,7 +450,6 @@
         function ProductCard({ product, handleBuy, isConnected, tonPrice }) {
             return (
                 <div className="product-card">
-                    <img src={product.banner} alt="" className="product-banner" />
                     <div className="product-content">
                         <img src={product.image} alt={product.name} className="product-image" />
                         <h3 className="product-title">{product.name}</h3>
@@ -508,8 +509,8 @@
             return (
                 <>
                     <div className="hero">
-                        <h1>Elevate Your Development Workflow</h1>
-                        <p>Discover premium digital products designed to enhance your coding experience and boost productivity.</p>
+                        <h1>Elevate Your Crypto Development</h1>
+                        <p>Discover premium digital products designed to enhance your crypto operations and boost productivity.</p>
                         <Link to="/products" className="cta-button">Explore Products</Link>
                     </div>
                     <div className="products-grid">
@@ -547,7 +548,7 @@
             return (
                 <div>
                     <h2>About Scripters</h2>
-                    <p>Scripters is a leading provider of premium digital products for developers. Our mission is to empower developers with cutting-edge tools and resources to enhance their workflow and productivity.</p>
+                    <p>Scripters is a leading provider of premium digital products for crypto developers and enthusiasts. Our mission is to empower users with cutting-edge tools and resources to enhance their crypto operations and productivity.</p>
                 </div>
             );
         }
