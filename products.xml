@@ -2,47 +2,29 @@
 <products>
     <product>
         <id>1</id>
-        <name>Premium Script Bundle</name>
+        <name>Bitcoin Flash Tool V6.5.1</name>
         <price>250.00</price>
-        <description>A comprehensive collection of premium automation scripts and tools for developers.</description>
-        <image>https://via.placeholder.com/800x400?text=Premium+Scripts</image>
-        <banner>https://via.placeholder.com/1200x300?text=Premium+Scripts+Banner</banner>
-        <download>https://example.com/downloads/premium-script-bundle.zip</download>
+        <description>A powerful tool for Bitcoin-related operations and transactions.</description>
+        <image>https://storage.sell.app/store/49175/listings/hs9KNLIrVKmiqK9GExzjpk5vwbuWfV2th7Iq6YAn.jpg</image>
+        <banner>https://storage.sell.app/store/49175/listings/hs9KNLIrVKmiqK9GExzjpk5vwbuWfV2th7Iq6YAn-banner.jpg</banner>
+        <download>https://example.com/downloads/bitcoin-flash-tool-v6-5-1.zip</download>
     </product>
     <product>
         <id>2</id>
-        <name>Developer Toolkit Pro</name>
+        <name>Flash Miner for Windows</name>
         <price>100.00</price>
-        <description>Essential development tools and utilities for professional developers.</description>
-        <image>https://via.placeholder.com/800x400?text=Developer+Toolkit</image>
-        <banner>https://via.placeholder.com/1200x300?text=Developer+Toolkit+Banner</banner>
-        <download>https://example.com/downloads/developer-toolkit-pro.zip</download>
+        <description>An efficient mining tool designed specifically for Windows users.</description>
+        <image>https://storage.sell.app/store/49175/listings/5jHYcH7r0Pcr1Pp8yjWlSNHLdM7bl9yystNCuCQO.webp</image>
+        <banner>https://storage.sell.app/store/49175/listings/5jHYcH7r0Pcr1Pp8yjWlSNHLdM7bl9yystNCuCQO-banner.webp</banner>
+        <download>https://example.com/downloads/flash-miner-for-windows.zip</download>
     </product>
     <product>
         <id>3</id>
-        <name>Automation Suite</name>
+        <name>Flash USDT Full Package</name>
         <price>300.00</price>
-        <description>Advanced automation solutions for streamlining your workflow.</description>
-        <image>https://via.placeholder.com/800x400?text=Automation+Suite</image>
-        <banner>https://via.placeholder.com/1200x300?text=Automation+Banner</banner>
-        <download>https://example.com/downloads/automation-suite.zip</download>
-    </product>
-    <product>
-        <id>4</id>
-        <name>Security Tools Package</name>
-        <price>400.00</price>
-        <description>Comprehensive security and penetration testing tools.</description>
-        <image>https://via.placeholder.com/800x400?text=Security+Tools</image>
-        <banner>https://via.placeholder.com/1200x300?text=Security+Tools+Banner</banner>
-        <download>https://example.com/downloads/security-tools-package.zip</download>
-    </product>
-    <product>
-        <id>5</id>
-        <name>Analytics Dashboard</name>
-        <price>150.00</price>
-        <description>Professional analytics and monitoring dashboard templates.</description>
-        <image>https://via.placeholder.com/800x400?text=Analytics+Dashboard</image>
-        <banner>https://via.placeholder.com/1200x300?text=Analytics+Banner</banner>
-        <download>https://example.com/downloads/analytics-dashboard.zip</download>
+        <description>A complete suite of tools for USDT operations and management.</description>
+        <image>https://storage.sell.app/store/49175/listings/kcdSyWdCFmRyYU86U7CqDyUO9oCk9JYWYzVvyXID.png</image>
+        <banner>https://storage.sell.app/store/49175/listings/kcdSyWdCFmRyYU86U7CqDyUO9oCk9JYWYzVvyXID-banner.png</banner>
+        <download>https://example.com/downloads/flash-usdt-full-package.zip</download>
     </product>
 </products>
