@@ -1,16 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charSet="utf-8"/>
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Scripters — Buy digital goods!</title>
-    <meta name="description" content="Premium digital goods and scripts from Scripters. Join our community and enhance your development workflow!"/>
+    <title>Scripters — Premium Digital Products for Developers</title>
+    <meta name="description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
+    <meta name="keywords" content="digital products, developer tools, scripts, automation, security tools"/>
+    <meta name="author" content="Scripters Team"/>
     <meta name="robots" content="index, follow"/>
-    <meta property="og:title" content="Scripters — Buy digital goods!"/>
-    <meta property="og:description" content="Premium digital goods and scripts from Scripters. Join our community and enhance your development workflow!"/>
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:title" content="Scripters — Buy digital goods!"/>
+    <meta property="og:url" content="https://scripters.store/"/>
+    <meta property="og:title" content="Scripters — Premium Digital Products for Developers"/>
+    <meta property="og:description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
+    <meta property="og:image" content="https://scripters.store/og-image.jpg"/>
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image"/>
+    <meta property="twitter:url" content="https://scripters.store/"/>
+    <meta property="twitter:title" content="Scripters — Premium Digital Products for Developers"/>
+    <meta property="twitter:description" content="Elevate your development workflow with Scripters' premium digital products. From automation scripts to security tools, we've got you covered."/>
+    <meta property="twitter:image" content="https://scripters.store/twitter-image.jpg"/>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
     <script src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
@@ -235,6 +250,12 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
+        .ton-price {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 10px;
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -260,7 +281,6 @@
     <script type="text/babel">
         const { useState, useEffect, useCallback } = React;
 
-        // Fetch products from XML
         async function fetchProducts() {
             const response = await fetch('products.xml');
             const text = await response.text();
@@ -275,7 +295,18 @@
                 description: product.getElementsByTagName('description')[0].textContent,
                 image: product.getElementsByTagName('image')[0].textContent,
                 banner: product.getElementsByTagName('banner')[0].textContent,
+                download: product.getElementsByTagName('download')[0].textContent,
             }));
+        }
+
+        async function fetchTONPrice() {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd', {
+                headers: {
+                    'X-CoinGecko-API-Key': 'CG-9rG6hNGDmXXZ9DSfEY5EJHYz'
+                }
+            });
+            const data = await response.json();
+            return data['the-open-network'].usd;
         }
 
         function App() {
@@ -284,9 +315,11 @@
             const [showModal, setShowModal] = useState(false);
             const [modalContent, setModalContent] = useState({ title: '', message: '' });
             const [tonConnect, setTonConnect] = useState(null);
+            const [tonPrice, setTonPrice] = useState(null);
 
             useEffect(() => {
                 fetchProducts().then(setProducts);
+                fetchTONPrice().then(setTonPrice);
 
                 const tc = new TON_CONNECT_UI.TonConnectUI({
                     manifestUrl: 'https://raw.githubusercontent.com/Rekt-Developer/swap.scripters.shop/refs/heads/main/tonconnect-manifest.json',
@@ -297,6 +330,13 @@
                 tc.onStatusChange(async (wallet) => {
                     setIsConnected(!!wallet);
                 });
+
+                // Fetch TON price every 5 minutes
+                const intervalId = setInterval(() => {
+                    fetchTONPrice().then(setTonPrice);
+                }, 300000);
+
+                return () => clearInterval(intervalId);
             }, []);
 
             const handleBuy = useCallback(async (product) => {
@@ -309,8 +349,7 @@
                     return;
                 }
 
-                const tonToUSD = 2.00;
-                const amountInTON = (product.price / tonToUSD).toFixed(6);
+                const amountInTON = (product.price / tonPrice).toFixed(6);
                 const transaction = {
                     validUntil: Math.floor(Date.now() / 1000) + 60,
                     messages: [
@@ -325,7 +364,8 @@
                     await tonConnect.sendTransaction(transaction);
                     setModalContent({
                         title: 'Transaction Initiated',
-                        message: `Transaction for $${product.price} (≈ ${amountInTON} TON) initiated! Please check your email for the product and contact us on Telegram.`
+                        message: `Transaction for $${product.price} (≈ ${amountInTON} TON) initiated! Please check your email for the product download link.`,
+                        downloadLink: product.download
                     });
                     setShowModal(true);
                 } catch (e) {
@@ -336,7 +376,7 @@
                     });
                     setShowModal(true);
                 }
-            }, [isConnected, tonConnect]);
+            }, [isConnected, tonConnect, tonPrice]);
 
             return (
                 <div className="container">
@@ -369,6 +409,9 @@
                                         >
                                             {isConnected ? 'Buy Now' : 'Connect Wallet to Buy'}
                                         </button>
+                                        {tonPrice && (
+                                            <p className="ton-price">≈ {(product.price / tonPrice).toFixed(2)} TON</p>
+                                        )}
                                     </div>
                                 </div>
                             ))}
@@ -377,6 +420,7 @@
 
                     <footer>
                         <p>© 2024 Scripters Store. All rights reserved.</p>
+                        {tonPrice && <p>Current TON Price: ${tonPrice.toFixed(2)}</p>}
                     </footer>
 
                     {showModal && (
@@ -392,6 +436,7 @@
                                         e.preventDefault();
                                         const email = e.target.email.value;
                                         console.log("Email submitted:", email);
+                                        window.location.href = modalContent.downloadLink;
                                         setShowModal(false);
                                     }}>
                                         <input 
@@ -402,7 +447,7 @@
                                             placeholder="Enter your email to receive products" 
                                         />
                                         <button type="submit" className="submit-button">
-                                            Submit
+                                            Download Product
                                         </button>
                                     </form>
                                 )}
