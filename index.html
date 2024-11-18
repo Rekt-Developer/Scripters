@@ -3,24 +3,24 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Scripters — Premium Digital Products for Developers</title>
-    <meta name="description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
-    <meta name="keywords" content="digital products, developer tools, Bitcoin, crypto, wallet management"/>
+    <title>Scripters — Premium Digital Products for Crypto Developers</title>
+    <meta name="description" content="Elevate your crypto development workflow with Scripters' premium digital products. From Bitcoin tools to wallet management solutions, we've got you covered."/>
+    <meta name="keywords" content="digital products, crypto tools, Bitcoin, wallet management, blockchain development"/>
     <meta name="author" content="Scripters Team"/>
     <meta name="robots" content="index, follow"/>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://scripters.store/"/>
-    <meta property="og:title" content="Scripters — Premium Digital Products for Developers"/>
-    <meta property="og:description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
+    <meta property="og:title" content="Scripters — Premium Digital Products for Crypto Developers"/>
+    <meta property="og:description" content="Elevate your crypto development workflow with Scripters' premium digital products. From Bitcoin tools to wallet management solutions, we've got you covered."/>
     <meta property="og:image" content="https://scripters.store/og-image.jpg"/>
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image"/>
     <meta property="twitter:url" content="https://scripters.store/"/>
-    <meta property="twitter:title" content="Scripters — Premium Digital Products for Developers"/>
-    <meta property="twitter:description" content="Elevate your development workflow with Scripters' premium digital products. From Bitcoin tools to crypto management solutions, we've got you covered."/>
+    <meta property="twitter:title" content="Scripters — Premium Digital Products for Crypto Developers"/>
+    <meta property="twitter:description" content="Elevate your crypto development workflow with Scripters' premium digital products. From Bitcoin tools to wallet management solutions, we've got you covered."/>
     <meta property="twitter:image" content="https://scripters.store/twitter-image.jpg"/>
 
     <!-- Favicon -->
@@ -367,6 +367,23 @@
             border-top: 1px solid var(--border);
         }
 
+        .search-bar {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text);
+        }
+
         @media (max-width: 768px) {
             .header {
                 flex-direction: column;
@@ -434,6 +451,7 @@
                 <header className="header">
                     <Link to="/" className="logo">
                         <img src="assets/logo.jpg" alt="Scripters Logo" />
+                        <span>Scripters Store</span>
                     </Link>
                     <nav className="nav-links">
                         <Link to="/" className="nav-link">Home</Link>
@@ -515,10 +533,10 @@
                     <div className="hero">
                         <h1>Elevate Your Crypto Development</h1>
                         <p>Discover premium digital products designed to enhance your crypto operations and boost productivity.</p>
-                        <Link to="/products" className="cta-button">Explore Products</Link>
+                        <Link to="/products" className="cta-button">Explore All Products</Link>
                     </div>
                     <div className="products-grid">
-                        {products.slice(0, 3).map((product) => (
+                        {products.map((product) => (
                             <ProductCard 
                                 key={product.id} 
                                 product={product} 
@@ -533,18 +551,35 @@
         }
 
         function ProductsPage({ products, handleBuy, isConnected, tonPrice }) {
+            const [searchTerm, setSearchTerm] = useState('');
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                product.description.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+
             return (
-                <div className="products-grid">
-                    {products.map((product) => (
-                        <ProductCard 
-                            key={product.id} 
-                            product={product} 
-                            handleBuy={handleBuy} 
-                            isConnected={isConnected}
-                            tonPrice={tonPrice}
+                <React.Fragment>
+                    <div className="search-bar">
+                        <input 
+                            type="text" 
+                            placeholder="Search products..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="search-input"
                         />
-                    ))}
-                </div>
+                    </div>
+                    <div className="products-grid">
+                        {filteredProducts.map((product) => (
+                            <ProductCard 
+                                key={product.id} 
+                                product={product} 
+                                handleBuy={handleBuy} 
+                                isConnected={isConnected}
+                                tonPrice={tonPrice}
+                            />
+                        ))}
+                    </div>
+                </React.Fragment>
             );
         }
 
